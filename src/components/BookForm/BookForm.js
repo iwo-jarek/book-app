@@ -1,29 +1,20 @@
-import React from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
-class BookForm extends React.Component {
+const BookForm = () => {
 
-  state = {
-    title: '',
-    author: ''
-  };
+  const dispatch = useDispatch();
 
-  handleSubmit = e => {
+
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+
+  const handleSubmit = e => {
     e.preventDefault();
-    this.props.addBook({ title: this.state.title, author: this.state.author });
-    this.setState({ ...this.state, title: '', author: '' });
+    dispatch({ type: 'ADD_BOOK',payload: { title, author }});
+    setTitle('');
+    setAuthor('');
   }
-
-  setTitle = value => {
-    this.setState({ ...this.state, title: value })
-  }
-
-  setAuthor = value => {
-    this.setState({ ...this.state, author: value })
-  }
-
-  render() {
-    const { handleSubmit, setTitle, setAuthor } = this;
-    const { title, author } = this.state;
 
     return (
       <form onSubmit={handleSubmit}>
@@ -33,6 +24,8 @@ class BookForm extends React.Component {
       </form>
     );
   }
-};
+
+
+
 
 export default BookForm;
